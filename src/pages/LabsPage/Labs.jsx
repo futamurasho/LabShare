@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import labApi from "../../api/labs"; // 研究室情報を取得するAPIをインポート
 import Header from "../../components/Header/Header";
-// import ButtonAppBar from "../../components/Header/Headertest";
 import Search from "../../components/Search/Search";
 import { useUser } from "../../contexts/UserContext";
 import "./Labs.css";
-import LabsContainer from "../../components/labsContainer/labsContainer";
+import LabsContainer from "../../components/LabsContainer/LabsContainer";
 
 const Labs = () => {
   const state = useUser(); //ユーザ情報
