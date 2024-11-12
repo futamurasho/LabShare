@@ -1,0 +1,4 @@
+.error-message {
+  color: red; /* 赤色に設定 */
+  font-weight: bold; /* 太字にする場合はこの行を追加 */
+}

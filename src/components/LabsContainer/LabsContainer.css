@@ -1,0 +1,75 @@
+.labs-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  text-align: left;
+}
+
+.labs-list {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(500px, 1fr)
+  ); /* 300px幅のカードが収まる範囲で繰り返し配置 */
+  gap: 100px;
+  list-style: none;
+  padding: 0;
+}
+
+.lab-card {
+  background-color: #f9f9f9;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: left;
+  transition: transform 0.2s;
+  position: relative;
+  overflow: hidden; /* ボタンがはみ出ないようにする */
+}
+
+.lab-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.lab-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.2em;
+  color: #333333;
+  text-align: center; /* タイトルだけ中央揃え */
+  border-bottom: 1px solid #7ca60b; /* 線を追加 */
+  padding-bottom: 10px; /* 線とテキストの間に余白を追加 */
+}
+
+.lab-card p {
+  display: flex;
+  align-items: flex-start;
+  margin: 5px 0;
+  color: #666666;
+}
+
+.lab-card .label {
+  text-align: center;
+  min-width: 85px; /* ラベルの幅を固定して揃えます */
+  font-weight: bold;
+}
+
+.lab-card .value {
+  flex: 1; /* 残りの幅を使って内容を表示 */
+  text-indent: 5px; /* ラベルの位置に合わせる */
+  word-break: break-word; /* キーワードが長い場合に改行 */
+}
+
+.favorite-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 2em; /* アイコンのサイズ調整 */
+  padding: 0;
+  position: absolute;
+  bottom: 10px; /* カードの下から10px */
+  right: 10px; /* カードの右から10px */
+}

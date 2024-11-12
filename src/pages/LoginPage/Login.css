@@ -1,0 +1,75 @@
+.login-container {
+  display: flex;
+  justify-content: center; /* 中央に配置 */
+  align-items: center; /* 縦方向にも中央に配置 */
+  height: 100vh; /* ビューポートの高さに合わせる */
+  background-color: #f1f2f4;
+}
+
+.login-card {
+  background-color: #ffffff; /* カードの背景色 */
+  border-radius: 10px; /* 角を丸く */
+  border: 1.5px solid #dcdcdc;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 400px;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+}
+
+.login-card h1 {
+  margin-bottom: 20px; /* タイトルの下に余白 */
+  font-size: 1.5em; /* フォントサイズ */
+  color: #2c3e50; /* タイトルの色 */
+}
+
+.input-group {
+  margin-bottom: 15px; /* 各項目の間に余白 */
+  text-align: left; /* カード内で左揃えにする */
+}
+
+.login-card label {
+  margin-right: 10px; /* ラベルと入力フィールドの間にマージンを追加 */
+  font-weight: bold; /* ラベルを太字にする場合 */
+  white-space: nowrap; /* ラベルの改行を防ぐ */
+  display: block; /* インラインブロック要素として表示 */
+  color: #2c3e50;
+}
+
+.login-input {
+  width: 90%; /* 入力フィールドの幅を100%に */
+  padding: 10px; /* 内側の余白 */
+  border: 0.5px solid #000000; /* 枠線 */
+  border-radius: 5px; /* 角を丸く */
+  margin-bottom: 15px; /* 入力フィールドの間に余白 */
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.loginButton {
+  background-color: #96c70f; /* ボタンの背景色 */
+  color: #ffffff; /* ボタンの文字色 */
+  border: none; /* ボーダーをなしに */
+  padding: 10px 15px; /* ボタン内の余白 */
+  border-radius: 5px; /* 角を丸く */
+  cursor: pointer; /* カーソルをポインターに */
+  font-size: 16px; /* フォントサイズ */
+  transition: background-color 0.3s; /* ホバー時の背景色の変化をスムーズに */
+}
+
+.loginButton:hover {
+  background-color: #7aa30b; /* ホバー時の背景色 */
+}
+
+.errorms {
+  color: #ff0000; /* ボタンの文字色 */
+}
