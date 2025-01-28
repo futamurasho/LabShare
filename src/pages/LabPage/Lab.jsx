@@ -135,11 +135,11 @@ const Lab = () => {
           </p>
           <p>
             <span className="label">メンバー</span>
-            {lab.professor}
+            {lab.professor.join(", ")}
           </p>
           <p>
             <span className="label">キーワード</span>
-            {lab.keywords.join(",")}
+            {lab.keywords.join(", ")}
           </p>
 
           <div className="research-activities">

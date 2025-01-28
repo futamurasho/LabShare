@@ -87,6 +87,7 @@ const Squeeze = ({ professors, setFilteredProfessors }) => {
     option: (provided) => ({
       ...provided,
       display: "block", // 各オプションを縦に並べる
+      color: "#000",
       whiteSpace: "nowrap", // テキストを折り返さない
       textAlign: "left", // 左揃え
       padding: "10px", // オプションに余白を追加
@@ -141,7 +142,7 @@ const Squeeze = ({ professors, setFilteredProfessors }) => {
               isMulti
               onChange={handleKeywordsChange}
               styles={customStyles} // カスタムスタイルを適用
-              placeholder="キーワードを選択..."
+              placeholder="キーワードを選択...(複数可)"
             />
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>

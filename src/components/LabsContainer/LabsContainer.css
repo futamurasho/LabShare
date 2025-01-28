@@ -69,6 +69,30 @@
   word-break: break-word; /* キーワードが長い場合に改行 */
 }
 
+/* スマホ用スタイル */
+@media (max-width: 768px) {
+  .lab-card {
+    padding: 10px;
+  }
+
+  .lab-card h2 {
+    font-size: 0.9rem; /* タイトルサイズを調整 */
+  }
+
+  .lab-card p {
+    font-size: 0.9rem; /* 全体のフォントサイズを縮小 */
+  }
+
+  .lab-card .label {
+    max-width: 90px;
+    font-size: 0.85rem; /* ラベルのフォントサイズを縮小 */
+  }
+
+  .lab-card .value {
+    font-size: 0.7rem; /* 値のフォントサイズを縮小 */
+  }
+}
+
 .favorite-button {
   background: none;
   border: none;

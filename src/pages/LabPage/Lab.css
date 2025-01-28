@@ -1,6 +1,6 @@
 .Lab_data {
   padding: 20px;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 20px auto;
   border-radius: 8px;
   border: 0.5px solid #000000;
@@ -47,8 +47,9 @@
   margin-top: 15px;
   padding: 10px;
   border: 0.5px solid #000000;
-  background-color: #f9f9f960;
+  background-color: #f9f9f9;
   border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .professor-section h3 {
@@ -113,7 +114,7 @@
 /* コメント投稿ボタン */
 .submit-comment {
   background-color: #96c70f;
-  color: #333333;
+  color: #ffffff;
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -175,4 +176,89 @@
 .no-comments {
   color: #7d7d7d;
   font-size: 1em;
+}
+
+/* スマホサイズ向けのレスポンシブデザイン */
+@media (max-width: 768px) {
+  .Lab_data {
+    padding: 15px;
+    max-width: 90%; /* 幅を狭く調整 */
+    margin: 15px auto;
+    margin-top: 100px;
+  }
+  .Lab_data h1 {
+    font-size: 1.5rem; /* タイトルのフォントサイズ調整 */
+  }
+
+  .lab-info p {
+    font-size: 1rem; /* フォントサイズを縮小 */
+    line-height: 1.4; /* 行間を狭める */
+    flex-wrap: wrap; /* 内容が長い場合に折り返しを有効に */
+    margin: 8px 0; /* 上下の余白を調整 */
+  }
+
+  .label {
+    width: 80px; /* ラベル幅を縮小 */
+    font-size: 0.9rem; /* ラベルのフォントサイズを縮小 */
+    margin-right: 5px; /* ラベルと値の間隔を調整 */
+  }
+
+  .research-activities h2 {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    color: #333333;
+  }
+
+  .professor-section {
+    padding: 10px;
+    margin-top: 10px;
+    border: 0.5px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .professor-section h3 {
+    font-size: 1rem; /* 教員名のサイズを調整 */
+  }
+
+  .section-content h4 {
+    font-size: 1rem; /* セクションタイトルのサイズを調整 */
+  }
+
+  .section-content ul {
+    padding-left: 5px;
+  }
+
+  .section-content li {
+    font-size: 0.9rem; /* リスト項目のフォントサイズを小さく */
+    margin: 5px 0;
+  }
+
+  .comments-section input[type="text"] {
+    font-size: 1rem; /* コメント入力欄のフォントサイズを調整 */
+  }
+
+  .submit-comment {
+    font-size: 0.9rem; /* ボタンのフォントサイズを調整 */
+    padding: 8px 15px;
+  }
+}
+
+/* ラベルと値の全体的な調整 */
+.lab-info p {
+  display: flex;
+  align-items: center; /* ラベルと値を中央揃え */
+  flex-wrap: wrap; /* 内容が長い場合に折り返しを有効に */
+}
+
+.label {
+  width: 120px; /* ラベル幅を適切に調整 */
+  font-weight: bold;
+  margin-right: 10px;
+  color: #333;
+}
+
+.lab-info span {
+  word-break: break-word; /* キーワードや名前が長い場合に折り返し */
 }
