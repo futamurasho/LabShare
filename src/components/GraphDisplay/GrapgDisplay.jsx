@@ -10,6 +10,7 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
   const [selectedNode, setSelectedNode] = useState(null); // 選択されたノードを管理
   const [selectedProfessor, setSelectedProfessor] = useState(null);
   const [layoutDone, setLayoutDone] = useState(false); // レイアウト完了フラグ
+  const [cyInstance, setCyInstance] = useState(null); // `cy`インスタンスを保存
 
   const clusterColors = [
     "#ff6666",
@@ -40,6 +41,14 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
       const professor = professors[professorIndex];
       setSelectedProfessor(professor);
       console.log("Selected professor:", professor);
+    }
+  };
+
+  // ボタンのクリックでグラフを元の位置に戻す
+  const handleFitButtonClick = () => {
+    if (cyInstance) {
+      cyInstance.fit();
+      console.log("Graph reset to fit view.");
     }
   };
 
@@ -256,12 +265,32 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
       >
         <div
           style={{
+            position: "relative", // 子要素の位置指定の基準
             width: "80%", // 枠の幅
             height: "80%", // 枠の高さ
             border: "2px solid #ddd",
             overflow: "hidden", // 枠外を非表示にする設定
           }}
         >
+          {/* 右上に配置するボタン */}
+          <button
+            onClick={handleFitButtonClick}
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              backgroundColor: "#96c70f",
+              color: "#ffffff",
+              border: "none",
+              borderRadius: "5px",
+              padding: "10px 15px",
+              cursor: "pointer",
+              zIndex: 10, // ボタンを最前面に表示
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            Reset Position
+          </button>
           <CytoscapeComponent
             elements={elements}
             style={{ width: "100%", height: "100%" }}
@@ -271,6 +300,7 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
             cy={(cy) => {
               // レイアウト終了時にフラグを更新
               cy.on("layoutstop", () => {
+                setCyInstance(cy); // `cy`インスタンスを保存
                 //画面リロードした時にのみfitさせる
                 if (fit) {
                   fit = false;
@@ -286,6 +316,7 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
               });
               // ノードクリックイベント
               cy.on("click", "node", handleNodeClick);
+              cy.on("tap", "node", handleNodeClick);
               // cy.on("mouseover", "node", handleNodeMouseOver); // マウスがノードに入ったとき
               // cy.on("mouseout", "node", handleNodeMouseOut); // マウスがノードから離れたとき
             }}

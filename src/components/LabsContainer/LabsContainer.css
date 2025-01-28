@@ -1,6 +1,5 @@
 .labs-container {
-  padding: 20px;
-  max-width: 1200px;
+  padding: 20px 40px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -11,11 +10,18 @@
   display: grid;
   grid-template-columns: repeat(
     auto-fit,
-    minmax(500px, 1fr)
+    minmax(300px, 1fr)
   ); /* 300px幅のカードが収まる範囲で繰り返し配置 */
   gap: 100px;
   list-style: none;
   padding: 0;
+}
+
+/* PC（1200px以上）の場合は2列固定 */
+@media (min-width: 1200px) {
+  .labs-list {
+    grid-template-columns: repeat(2, 1fr); /* 2列固定 */
+  }
 }
 
 .lab-card {

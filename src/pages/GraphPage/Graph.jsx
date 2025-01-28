@@ -35,7 +35,7 @@ const Graph = () => {
         <h2 style={{ fontSize: "32px", fontWeight: "bold", color: "#333" }}>
           教員ネットワークグラフ
         </h2>
-        <p style={{ fontSize: "16px", color: "#555", marginTop: "10px" }}>
+        <p>
           このグラフは、教員の研究内容に関するキーワードを基にしてクラスタリングを行った結果のネットワーク図です。
           <br />
           以下の入力フィールドに入力すると，当てはまる教員のノードが黒い枠に囲まれます。
