@@ -85,4 +85,29 @@
   flex: 1;
   margin-right: 10px;
   line-height: 1.4;
+  word-break: break-word; /* 長い単語を適切に改行 */
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .register-card {
+    padding: 20px;
+    padding-top: 30px;
+  }
+
+  .register-card h1 {
+    font-size: 1.2em; /* タイトルのフォントサイズを調整 */
+  }
+
+  .register-card input {
+    font-size: 14px; /* 入力フィールドのフォントサイズを調整 */
+  }
+
+  .registerButton {
+    font-size: 14px; /* ボタンのフォントサイズを小さく */
+  }
+
+  .consent-group {
+    font-size: 0.8em; /* 注意書きのフォントサイズを調整 */
+  }
 }
