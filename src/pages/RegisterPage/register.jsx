@@ -107,13 +107,13 @@ const Register = () => {
           </div>
 
           <div className="consent-group">
+            <p>研究室の研究に必要な情報として提供することに同意します。</p>
             <input
               type="checkbox"
               id="consent"
               checked={consent}
               onChange={handleConsentChange}
             />
-            <p>研究室の研究に必要な情報として提供することに同意します。</p>
           </div>
 
           <button type="submit" className="registerButton">

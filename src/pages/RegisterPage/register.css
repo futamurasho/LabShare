@@ -63,6 +63,7 @@
   cursor: pointer; /* カーソルをポインターに */
   font-size: 16px; /* フォントサイズ */
   transition: background-color 0.3s; /* ホバー時の背景色の変化をスムーズに */
+  align-self: center; /* ボタンを親要素の中央に揃える */
 }
 
 .registerButton:hover {
@@ -75,17 +76,20 @@
 
 .consent-group {
   display: flex;
-  align-items: center;
+  flex-direction: column; /* 子要素を縦方向に配置 */
   margin-top: 10px;
   font-size: 0.9em;
   color: #555;
+}
+
+.consent-group p {
+  margin: 0 0 5px; /* 下に少し余白を追加 */
 }
 
 .consent-group input[type="checkbox"] {
   flex: 1;
   margin-right: 10px;
   line-height: 1.4;
-  word-break: break-word; /* 長い単語を適切に改行 */
 }
 
 /* レスポンシブデザイン */
@@ -108,6 +112,10 @@
   }
 
   .consent-group {
+    font-size: 0.8em; /* 注意書きのフォントサイズを調整 */
+  }
+
+  .consent-group p {
     font-size: 0.8em; /* 注意書きのフォントサイズを調整 */
   }
 }
