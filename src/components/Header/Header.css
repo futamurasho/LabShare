@@ -6,7 +6,7 @@
 
 .header {
   background-color: #fee583; /* ヘッダーの背景色 */
-  padding: 15px 25px;
+  padding: 15px 20px;
   color: #333333;
   width: 100%;
   position: fixed; /* ヘッダーを固定 */
@@ -29,7 +29,6 @@
 }
 
 .header__inner {
-  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -43,6 +42,7 @@
   font-size: 1.2em;
   font-weight: 600;
   color: #000000;
+  margin: 0; /* 左端に固定 */
 }
 
 .header__nav {
@@ -78,12 +78,56 @@ h2 {
   color: #ffffff;
 }
 
+/* ハンバーガーメニューアイコン */
+.header__hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger-line {
+  width: 25px;
+  height: 3px;
+  background-color: #333333;
+  border-radius: 2px;
+}
+
+/* モバイルデザイン */
 @media (max-width: 600px) {
-  .header__inner {
-    max-width: 90%; /* ビューポート幅の90%に設定して中央揃えを維持 */
+  .header__hamburger {
+    display: flex; /* ハンバーガーメニューを表示 */
   }
 
-  .header {
-    padding: 10px 15px; /* パディングを縮小して収まりやすくする */
+  .header__nav {
+    display: none; /* デフォルトで非表示 */
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f9eaad;
+    position: absolute;
+    top: 100%; /* ヘッダーの下に表示 */
+    right: 0;
+    width: 100%;
+    padding: 10px 20px;
+  }
+
+  .header__nav.open {
+    display: flex; /* メニューが開かれた状態 */
+  }
+
+  .header__ul {
+    flex-direction: column; /* リンクを縦並びに */
+  }
+  .header__list {
+    list-style: none; /* リストマーカーを削除 */
+    padding: 0; /* 余白をリセット */
+    width: 100%; /* リスト項目全体をカバー */
+    height: 100%; /* リスト項目全体をカバー */
+  }
+
+  /* ホバー時の背景色 */
+  .header__list a:hover {
+    background-color: #ffd54f; /* ホバー時の背景色 */
+    color: #000; /* ホバー時の文字色 */
   }
 }

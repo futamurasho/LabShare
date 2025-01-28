@@ -46,6 +46,7 @@ const Lab = () => {
       .then((data) => {
         setLab(data);
         setComments(data.comments || []);
+        console.log("データは:", data);
       })
       .catch((error) => {
         console.error("Error fetching research papers:", error);

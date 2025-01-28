@@ -146,10 +146,10 @@ const Search = ({ setLabs, likedLabs }) => {
           </select>
         </div>
         <div>
-          <label>教授名</label>
+          <label>教員名</label>
           <input
             type="text"
-            placeholder="教授名から検索..."
+            placeholder="教員名から検索..."
             name="professor"
             value={query.professor}
             onChange={searchInput}
