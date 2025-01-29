@@ -1,16 +1,16 @@
 import { useState } from "react";
 import React from "react";
-import "./Squeeze.css";
+import "./MySqueeze.css";
 import Select from "react-select";
-import keywordOPTIONS from "../../assets/keywords.json";
+import keywordOPTIONS from "../../../assets/keywords.json";
+const FASTAPI_URL = import.meta.env.VITE_FASTAPI_URL;
+console.log("FASTAPI_URL:", FASTAPI_URL); // デバッグ用
 
 const Squeeze = ({ professors, setFilteredProfessors }) => {
   const departmentOPTIONS = ["", "情報理工学専攻", "電気電子工学専攻"];
 
   const [query, setQuery] = useState({
-    professor: "",
     department: "",
-    lab: "",
     keywords: [],
   });
 
@@ -33,48 +33,61 @@ const Squeeze = ({ professors, setFilteredProfessors }) => {
 
   const reset = () => {
     setQuery({
-      professor: "",
       department: "",
-      lab: "",
       keywords: [],
     });
     setFilteredProfessors([]);
   };
 
   //絞り込み
-  // 検索処理
-  const sq = (e) => {
+  // 検索処理(推薦処理に変更)
+  const sq = async (e) => {
     e.preventDefault();
-    // 全てのクエリが空の場合、フィルタリングせず空リストを設定
-    if (
-      query.professor === "" &&
-      query.lab === "" &&
-      query.department === "" &&
-      query.keywords.length === 0
-    ) {
+
+    // キーワードが空の場合、処理をスキップしてリセット
+    if (query.keywords.length === 0) {
       setFilteredProfessors([]);
       return;
     }
+    try {
+      // FastAPIエンドポイントにPOSTリクエストを送信
+      const response = await fetch(`${FASTAPI_URL}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          department: query.department,
+          keywords: query.keywords,
+        }),
+      });
+      console.log({
+        department: query.department,
+        keywords: query.keywords,
+      });
+      // レスポンスをJSON形式で取得
+      const data = await response.json();
+      console.log(data);
 
-    const filtered = professors.filter((professor) => {
-      const matchesProfessor =
-        query.professor === "" || professor.name.includes(query.professor); // 教員名一致
+      if (response.ok) {
+        // recommendationsのnameを取得
+        const recommendedNames = data.recommendations.map((rec) => rec.name);
 
-      const matchesLab = query.lab === "" || professor.lab.includes(query.lab); // 研究室名一致
+        // professorsからnameが一致するものだけをフィルタリング
+        const filtered = professors.filter((professor) =>
+          recommendedNames.includes(professor.name)
+        );
 
-      const matchesDepartment =
-        query.department === "" || professor.department === query.department;
-
-      const matchesKeywords =
-        query.keywords.length === 0 ||
-        query.keywords.every((keyword) => professor.keywords.includes(keyword)); // キーワード一致
-
-      return (
-        matchesProfessor && matchesLab && matchesDepartment && matchesKeywords
-      );
-    });
-
-    setFilteredProfessors(filtered); // フィルタリング結果を設定
+        // フィルタ結果を設定
+        setFilteredProfessors(filtered);
+      } else {
+        console.error("APIエラー:", data.detail); // エラー詳細をログ出力
+        setFilteredProfessors([]); // 推薦結果をリセット
+      }
+    } catch (error) {
+      console.error("ネットワークエラー:", error);
+      setFilteredProfessors([]); // 推薦結果をリセット
+    }
   };
 
   // カスタムスタイル
@@ -99,17 +112,6 @@ const Squeeze = ({ professors, setFilteredProfessors }) => {
       <div className="squeeze-container">
         <form onSubmit={sq}>
           <div className="not-keywords">
-            <label>教員名</label>
-            <input
-              type="text"
-              placeholder="教員名から検索..."
-              name="professor"
-              value={query.professor}
-              onChange={searchInput}
-              className="squeeze-input"
-            />
-          </div>
-          <div className="not-keywords">
             <label>専攻</label>
             <select
               name="department"
@@ -123,17 +125,6 @@ const Squeeze = ({ professors, setFilteredProfessors }) => {
                 </option>
               ))}
             </select>
-          </div>
-          <div className="not-keywords">
-            <label>研究室名</label>
-            <input
-              type="text"
-              placeholder="研究室名から検索..."
-              name="lab"
-              value={query.lab}
-              onChange={searchInput}
-              className="squeeze-input"
-            />
           </div>
           <div className="keywords">
             <label>キーワード</label>
@@ -159,7 +150,7 @@ const Squeeze = ({ professors, setFilteredProfessors }) => {
               リセット
             </button>
             <button type="submit" className="squeeze-button">
-              検索
+              推薦
             </button>
           </div>
         </form>

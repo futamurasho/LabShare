@@ -52,6 +52,9 @@ const Header = () => {
               <li className="header__list">
                 <Link to="/graph">教員グラフ</Link>
               </li>
+              <li className="header__list">
+                <Link to="/mygraph">マイグラフ</Link>
+              </li>
               {state && state.username ? (
                 <li className="header__list">
                   <a href="#" onClick={handleLogout}>

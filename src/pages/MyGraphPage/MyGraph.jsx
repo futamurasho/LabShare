@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import professorApi from "../../api/professor";
 import Header from "../../components/Header/Header";
 import { useUser } from "../../contexts/UserContext";
-import "./Graph.css";
+import "./MyGraph.css";
 import React from "react";
-import GraphDisplay from "../../components/GraphDisplay/GraphDisplay";
-import Squeeze from "../../components/Squeeze/Squeeze";
+import MyGraphDisplay from "../../components/MyGraph/MyGraphDisplay/MyGraphDisplay";
+import MySqueeze from "../../components/MyGraph/MySqueeze/MySqueeze";
 
-const Graph = () => {
+const MyGraph = () => {
   const state = useUser(); //ユーザ情報
   const [professors, setProfessor] = useState([]);
   const [filteredProfessors, setFilteredProfessors] = useState([]); // フィルタリング結果
@@ -33,26 +33,21 @@ const Graph = () => {
         }}
       >
         <h2 style={{ fontSize: "32px", fontWeight: "bold", color: "#333" }}>
-          教員ネットワークグラフ
+          マイネットワークグラフ
         </h2>
         <p>
-          このグラフは、教員の研究内容に関するキーワードを基にしてクラスタリングを行った結果のネットワーク図です。
-          <br />
-          以下の入力フィールドに入力すると，当てはまる教員のノードが黒い枠に囲まれます。
+          行きたい専攻と興味あるキーワードを入力して「推薦」ボタンを押すと，入力に合う教員が推薦され，グラフで確認できます
           <br />
           ノードはクリックするとグラフ下に詳細情報が表示されます。
         </p>
       </div>
-      <Squeeze
+      <MySqueeze
         professors={professors}
         setFilteredProfessors={setFilteredProfessors}
       />
-      <GraphDisplay
-        professors={professors}
-        filteredProfessors={filteredProfessors}
-      />
+      <MyGraphDisplay professors={filteredProfessors} />
     </>
   );
 };
 
-export default Graph;
+export default MyGraph;

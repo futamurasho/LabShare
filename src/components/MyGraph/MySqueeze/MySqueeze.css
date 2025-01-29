@@ -1,0 +1,65 @@
+.squeeze-container {
+  display: flex;
+  flex-direction: column; /* 縦に並べる */
+  justify-content: left;
+  padding: 10px;
+  padding-top: 20px;
+  /* align-items: left; */
+  /* align-items: stretch; */
+}
+
+.not-keywords {
+  margin-bottom: 10px; /* 各検索項目の間に余白を追加 */
+  display: flex; /* フレックスボックスを使用して同じ行に配置 */
+  align-items: center; /* 縦方向に中央揃え */
+}
+.squeeze-container form {
+  width: fit-content;
+  margin: 0 auto;
+}
+.squeeze-container label {
+  margin-right: 10px; /* ラベルと入力フィールドの間にマージンを追加 */
+  font-weight: bold; /* ラベルを太字にする場合 */
+  white-space: nowrap; /* ラベルの改行を防ぐ */
+  width: 100px; /* 固定幅を設定 */
+  display: inline-block; /* インラインブロック要素として表示 */
+  color: #333333;
+}
+
+.keywords {
+  margin-bottom: 10px; /* 各検索項目の間に余白を追加 */
+  display: flex; /* 横並びに配置 */
+  align-items: center; /* 縦方向で中央揃え */
+}
+
+.keywords .react-select__control {
+  flex: 1; /* 入力欄が残りのスペースを占有 */
+  max-width: 300px; /* 最大幅を制限 */
+}
+
+.departmentselect {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #fafafa;
+  color: #333333;
+}
+
+.squeeze-button {
+  background-color: #96c70f; /* ボタンの背景色 */
+  color: #ffffff; /* ボタンの文字色 */
+  border: 1px solid #ddd;
+  border-radius: 8px; /* 角を丸くする */
+  padding: 5px 7.5px; /* ボタン内のパディングを設定 */
+  border: none; /* ボーダーをなしにする */
+  cursor: pointer; /* カーソルをポインターにする */
+  font-size: 16px; /* フォントサイズを設定 */
+  width: auto; /* 幅を自動に設定 */
+  min-width: 100px; /* 最小幅を設定して文字が収まるようにする */
+  text-align: center; /* テキストを中央揃え */
+  transition: background-color 0.3s; /* ホバー時の背景色の変化をスムーズに */
+}
+
+.squeeze-button:hover {
+  background-color: #7aa30b;
+  transform: scale(1.05);
+}
