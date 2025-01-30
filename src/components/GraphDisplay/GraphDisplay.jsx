@@ -225,14 +225,13 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
       })
     ),
     // クラスタごとにノードの色を設定
-    ...Array.from(new Set(professors.map((p) => p.cluster))).map(
-      (cluster, index) => ({
-        selector: `node[cluster = "${cluster}"]`,
-        style: {
-          backgroundColor: clusterColors[index % clusterColors.length],
-        },
-      })
-    ),
+    // クラスタごとのノードの色を固定
+    ...[0, 1, 2, 3, 4, 5, 6].map((cluster) => ({
+      selector: `node[cluster = "${cluster}"]`,
+      style: {
+        backgroundColor: clusterColors[cluster], // クラスタIDに対応する色を適用
+      },
+    })),
   ];
 
   // レイアウト
@@ -306,13 +305,13 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
                   fit = false;
                   cy.fit();
                 }
-                console.log("Layout finished");
+                // console.log("Layout finished");
                 setLayoutDone(true); // レイアウト終了フラグを設定
                 // 全ノードをロック
                 cy.nodes().forEach((node) => {
                   node.lock();
                 });
-                console.log("All nodes have been locked.");
+                // console.log("All nodes have been locked.");
               });
               // ノードクリックイベント
               cy.on("click", "node", handleNodeClick);
