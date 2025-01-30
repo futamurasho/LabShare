@@ -245,7 +245,7 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
     edgeElasticity: (edge) => {
       if (edge.data("id").startsWith("centroid-edge")) {
         // 重心間エッジ: 逆数の1000倍
-        return edge.data("weight") * 1500;
+        return edge.data("weight") * 500;
       }
       // 他のエッジ: 逆数の500倍
       return (1 / edge.data("weight")) * 500;
