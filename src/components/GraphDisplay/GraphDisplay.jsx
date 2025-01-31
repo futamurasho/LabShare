@@ -214,7 +214,7 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
             (ele.data("source") === selectedNode ||
               ele.data("target") === selectedNode)
               ? "#000"
-              : clusterColors[index % clusterColors.length],
+              : clusterColors[cluster],
           width: (ele) =>
             selectedNode &&
             (ele.data("source") === selectedNode ||
@@ -225,7 +225,6 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
       })
     ),
     // クラスタごとにノードの色を設定
-    // クラスタごとのノードの色を固定
     ...[0, 1, 2, 3, 4, 5, 6].map((cluster) => ({
       selector: `node[cluster = "${cluster}"]`,
       style: {
