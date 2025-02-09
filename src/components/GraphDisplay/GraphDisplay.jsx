@@ -21,7 +21,7 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
     "#dc97ff",
     "#ff9999",
     "#99ff99",
-    "#9999ff",
+    "#888",
   ]; //固定の色セット
 
   //クリックイベント

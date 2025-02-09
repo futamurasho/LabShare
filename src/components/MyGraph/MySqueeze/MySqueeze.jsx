@@ -67,17 +67,21 @@ const Squeeze = ({ professors, setFilteredProfessors }) => {
       });
       // レスポンスをJSON形式で取得
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       if (response.ok) {
-        // recommendationsのnameを取得
-        const recommendedNames = data.recommendations.map((rec) => rec.name);
-
-        // professorsからnameが一致するものだけをフィルタリング
-        const filtered = professors.filter((professor) =>
-          recommendedNames.includes(professor.name)
+        // recommendationsのnameとsimilarityを取得
+        const recommendationsMap = new Map(
+          data.recommendations.map((rec) => [rec.name, rec.similarity])
         );
-
+        // professorsからnameが一致するものだけをフィルタリング
+        const filtered = professors
+          .filter((professor) => recommendationsMap.has(professor.name))
+          .map((professor) => ({
+            ...professor,
+            similarity: recommendationsMap.get(professor.name),
+          }));
+        console.log("確認", filtered);
         // フィルタ結果を設定
         setFilteredProfessors(filtered);
       } else {

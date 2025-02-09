@@ -5,6 +5,7 @@ import { useUser } from "../../contexts/UserContext";
 import "./Graph.css";
 import React from "react";
 import GraphDisplay from "../../components/GraphDisplay/GraphDisplay";
+import DBSCANgraph from "../../components/DBSCAN/DBSCAN";
 import Squeeze from "../../components/Squeeze/Squeeze";
 
 const Graph = () => {
@@ -51,6 +52,10 @@ const Graph = () => {
         professors={professors}
         filteredProfessors={filteredProfessors}
       />
+      {/* <DBSCANgraph
+        professors={professors}
+        filteredProfessors={filteredProfessors}
+      /> */}
     </>
   );
 };

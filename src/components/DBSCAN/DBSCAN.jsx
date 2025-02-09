@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "./MyGraphDisplay.css";
+import "./DBSCAN.css";
 import React from "react";
 import CytoscapeComponent from "react-cytoscapejs";
 
 let fit = true;
 
-const MyGraphDisplay = ({ professors }) => {
+const DBSCANgraph = ({ professors, filteredProfessors }) => {
   const [selectedNode, setSelectedNode] = useState(null); // 選択されたノードを管理
   const [selectedProfessor, setSelectedProfessor] = useState(null);
   const [layoutDone, setLayoutDone] = useState(false); // レイアウト完了フラグ
@@ -21,7 +21,8 @@ const MyGraphDisplay = ({ professors }) => {
     "#dc97ff",
     "#ff9999",
     "#99ff99",
-    "#9999ff",
+    "#888",
+    "#000",
   ]; //固定の色セット
 
   //クリックイベント
@@ -107,23 +108,21 @@ const MyGraphDisplay = ({ professors }) => {
         fullName: professor.name, // フルネームを別フィールドに保持
         lab: professor.lab, // ラボ情報を保持
         department: professor.department,
-        cluster: String(professor.cluster), // 必ず文字列として扱う
-        centroid: professor.centroid,
-        similarity: professor.similarity || 0.5, // 類似度（デフォルトは0.5）
+        cluster: String(professor.DBSCAN), // 必ず文字列として扱う
+        centroid: professor.centroids_DBSCAN,
       },
     };
   });
 
   // クラスタ内の教員同士のエッジ
-  const edges = professors.flatMap((professor, index) =>
+  const intraClusterEdges = professors.flatMap((professor, index) =>
     professor.similarities
-      .filter((similarity) =>
-        // professors内に存在する教員のみを対象にする
-        professors.some((p) => p.name === similarity.name)
+      .filter(
+        (similarity) =>
+          similarity.similarity >= 0.748 &&
+          professors.find((p) => p.name === similarity.name)?.DBSCAN ===
+            professor.DBSCAN
       )
-      // .filter(
-      //   (similarity) => similarity.similarity >= 0.5 // 類似度制限
-      // )
       .map((similarity) => ({
         data: {
           id: `edge-${index}-${similarity.name}`,
@@ -132,10 +131,40 @@ const MyGraphDisplay = ({ professors }) => {
             (p) => p.name === similarity.name
           )}`,
           weight: similarity.similarity,
-          cluster: String(professor.cluster),
+          cluster: String(professor.DBSCAN),
         },
       }))
   );
+
+  // クラスタ内の重心ノード（代表教員）を取得
+  const centroidNodes = nodes.filter((node) => node.data.centroid);
+
+  // 重心間エッジを作成
+  const interCentroidEdges = centroidNodes.flatMap((centroid1) =>
+    centroidNodes
+      .filter((centroid2) => centroid1.data.cluster !== centroid2.data.cluster) // 異なるクラスタ
+      .map((centroid2) => {
+        // centroid1 の `similarities` 配列から centroid2 の類似度を取得
+        const similarityData = professors
+          .find((prof) => prof.name === centroid1.data.fullName)
+          ?.similarities.find((sim) => sim.name === centroid2.data.fullName);
+
+        // 類似度が見つからない場合のデフォルト値
+        const similarity = similarityData ? similarityData.similarity : 0;
+
+        return {
+          data: {
+            id: `centroid-edge-${centroid1.data.id}-${centroid2.data.id}`,
+            source: centroid1.data.id,
+            target: centroid2.data.id,
+            similarity: similarity, // 類似度
+            weight: similarity > 0 ? 1 / similarity : 1000, // 類似度が0の場合は大きな定数を設定
+          },
+        };
+      })
+  );
+
+  const edges = [...intraClusterEdges, ...interCentroidEdges];
 
   const elements = [...nodes, ...edges];
 
@@ -151,61 +180,58 @@ const MyGraphDisplay = ({ professors }) => {
         fontSize: 5,
         textHalign: "center",
         textValign: "center",
-        borderWidth: 0,
-      },
-    },
-    // cos類似度が0～0.5のノード
-    {
-      selector: "node[similarity <= 0.5]",
-      style: {
-        backgroundColor: "#cccccc", // グレー系
-      },
-    },
-    // cos類似度が0.5～0.8のノード
-    {
-      selector: "node[similarity > 0.5][similarity <= 0.8]",
-      style: {
-        backgroundColor: "#ffcc66", // 濃い赤系（高い関連性）
-      },
-    },
-    // cos類似度が0.8以上のノード
-    {
-      selector: "node[similarity > 0.8]",
-      style: {
-        backgroundColor: "#ff6666", // 濃い赤系（高い関連性）
+        borderWidth: (ele) =>
+          filteredProfessors.some(
+            (prof) => `prof-${professors.indexOf(prof)}` === ele.data().id
+          )
+            ? 3
+            : 0,
       },
     },
     {
       selector: "edge",
       style: {
+        width: 1,
         curveStyle: "straight",
-        opacity: (ele) =>
-          selectedNode &&
-          (ele.data("source") === selectedNode ||
-            ele.data("target") === selectedNode)
-            ? 0.9
-            : 0.3,
-        lineColor: (ele) =>
-          selectedNode &&
-          (ele.data("source") === selectedNode ||
-            ele.data("target") === selectedNode)
-            ? "#000"
-            : "#888",
-        width: (ele) =>
-          selectedNode &&
-          (ele.data("source") === selectedNode ||
-            ele.data("target") === selectedNode)
-            ? 4
-            : 2,
+        opacity: 0.3,
       },
     },
+    {
+      selector: 'edge[id^="centroid"]',
+      style: {
+        lineColor: "#888", // 重心間エッジは赤色
+        opacity: 0.1,
+        width: 7,
+      },
+    },
+    // クラスタ内のエッジの色を設定
+    ...Array.from(new Set(professors.map((p) => p.cluster))).map(
+      (cluster, index) => ({
+        selector: `edge[cluster = "${cluster}"]`,
+        style: {
+          //選択されたら色の変更を行う
+          lineColor: (ele) =>
+            selectedNode &&
+            (ele.data("source") === selectedNode ||
+              ele.data("target") === selectedNode)
+              ? "#000"
+              : clusterColors[cluster],
+          width: (ele) =>
+            selectedNode &&
+            (ele.data("source") === selectedNode ||
+              ele.data("target") === selectedNode)
+              ? 3
+              : 1,
+        },
+      })
+    ),
     // クラスタごとにノードの色を設定
-    // ...[0, 1, 2, 3, 4, 5, 6].map((cluster) => ({
-    //   selector: `node[cluster = "${cluster}"]`,
-    //   style: {
-    //     backgroundColor: clusterColors[cluster], // クラスタIDに対応する色を適用
-    //   },
-    // })),
+    ...[0, 1, 2, 3, 4, 5, 6].map((cluster) => ({
+      selector: `node[cluster = "${cluster}"]`,
+      style: {
+        backgroundColor: clusterColors[cluster], // クラスタIDに対応する色を適用
+      },
+    })),
   ];
 
   // レイアウト
@@ -215,7 +241,14 @@ const MyGraphDisplay = ({ professors }) => {
     padding: 50, // 枠との余白
     nodeRepulsion: 4500, // ノードの反発力を増加
     idealEdgeLength: 100, // エッジの理想的な長さ
-    edgeElasticity: (edge) => (1 / edge.data("weight")) * 500,
+    edgeElasticity: (edge) => {
+      if (edge.data("id").startsWith("centroid-edge")) {
+        // 重心間エッジ: 逆数の1000倍
+        return edge.data("weight") * 500;
+      }
+      // 他のエッジ: 逆数の500倍
+      return (1 / edge.data("weight")) * 500;
+    },
   };
 
   return (
@@ -347,4 +380,4 @@ const MyGraphDisplay = ({ professors }) => {
   );
 };
 
-export default MyGraphDisplay;
+export default DBSCANgraph;
