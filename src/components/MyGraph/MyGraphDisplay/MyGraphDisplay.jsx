@@ -252,7 +252,7 @@ const MyGraphDisplay = ({ professors }) => {
               borderRadius: "5px",
               padding: "10px 15px",
               cursor: "pointer",
-              zIndex: 10, // ボタンを最前面に表示
+              zIndex: 1, // ボタンを最前面に表示
               boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
             }}
           >
