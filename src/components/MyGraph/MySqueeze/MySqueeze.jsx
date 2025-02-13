@@ -141,7 +141,7 @@ const Squeeze = ({ professors, setFilteredProfessors }) => {
               }))} // 状態に基づいて選択状態を管理
               onChange={handleKeywordsChange}
               styles={{
-                customStyles,
+                ...customStyles,
                 menuPortal: (base) => ({ ...base, zIndex: 9999 }),
               }}
               menuPortalTarget={document.body} // カスタムスタイルを適用
