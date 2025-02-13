@@ -13,15 +13,16 @@ const MyGraphDisplay = ({ professors }) => {
   const [cyInstance, setCyInstance] = useState(null); // `cy`インスタンスを保存
 
   const clusterColors = [
-    "#ff6666",
-    "#66ff66",
-    "#6666ff",
-    "#ffcc66",
-    "#66ccff",
-    "#dc97ff",
-    "#ff9999",
-    "#99ff99",
-    "#9999ff",
+    "#ff6666", // 赤系
+    "#66ff66", // 緑系
+    "#6666ff", // 青系
+    "#ffcc66", // オレンジ系
+    "#66ccff", // 水色系
+    "#dc97ff", // 紫系
+    "#ff9999", // ピンク系
+    "#00b3b3", // ライトグリーン系
+    "#888888", // グレー系
+    "#ff66cc", // マゼンタ系（追加）
   ]; //固定の色セット
 
   //クリックイベント

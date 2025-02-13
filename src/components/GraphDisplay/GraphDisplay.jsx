@@ -13,15 +13,16 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
   const [cyInstance, setCyInstance] = useState(null); // `cy`インスタンスを保存
 
   const clusterColors = [
-    "#ff6666",
-    "#66ff66",
-    "#6666ff",
-    "#ffcc66",
-    "#66ccff",
-    "#dc97ff",
-    "#ff9999",
-    "#99ff99",
-    "#888",
+    "#ff6666", // 赤系
+    "#66ff66", // 緑系
+    "#6666ff", // 青系
+    "#ffcc66", // オレンジ系
+    "#66ccff", // 水色系
+    "#dc97ff", // 紫系
+    "#ff9999", // ピンク系
+    "#00b3b3", // ライトグリーン系
+    "#888888", // グレー系
+    "#ff66cc", // マゼンタ系（追加）
   ]; //固定の色セット
 
   //クリックイベント
@@ -118,7 +119,7 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
     professor.similarities
       .filter(
         (similarity) =>
-          similarity.similarity >= 0.748 &&
+          similarity.similarity >= 0.73 &&
           professors.find((p) => p.name === similarity.name)?.cluster ===
             professor.cluster
       )
@@ -225,7 +226,7 @@ const GraphDisplay = ({ professors, filteredProfessors }) => {
       })
     ),
     // クラスタごとにノードの色を設定
-    ...[0, 1, 2, 3, 4, 5, 6].map((cluster) => ({
+    ...[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((cluster) => ({
       selector: `node[cluster = "${cluster}"]`,
       style: {
         backgroundColor: clusterColors[cluster], // クラスタIDに対応する色を適用
