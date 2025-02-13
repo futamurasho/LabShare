@@ -145,7 +145,11 @@ const Squeeze = ({ professors, setFilteredProfessors }) => {
                 label: keyword, // 必要に応じてラベルをカスタマイズ
               }))} // 状態に基づいて選択状態を管理
               onChange={handleKeywordsChange}
-              styles={customStyles} // カスタムスタイルを適用
+              styles={{
+                customStyles,
+                menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+              }}
+              menuPortalTarget={document.body} // カスタムスタイルを適用
               placeholder="キーワードを選択...(複数可)"
             />
           </div>
