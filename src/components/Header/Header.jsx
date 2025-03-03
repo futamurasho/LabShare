@@ -47,6 +47,15 @@ const Header = () => {
           <nav className={`header__nav ${menuOpen ? "open" : ""}`}>
             <ul className="header__ul">
               <li className="header__list">
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSfayV_YIkWEvFy0-op1qY2QJP338_I8rn-nCGxDBl2iSc_thQ/viewform?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  アンケート
+                </a>
+              </li>
+              <li className="header__list">
                 <Link to="/">研究室一覧</Link>
               </li>
               <li className="header__list">
