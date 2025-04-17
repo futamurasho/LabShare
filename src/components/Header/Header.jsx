@@ -11,7 +11,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false); // ハンバーガーメニューの開閉状態
 
   const handleLogout = () => {
-    // ログアウト確認ポップアップ
+    // ログアウト確認ポップアップssss
     const confirmLogout = window.confirm("ログアウトしますか？");
     if (confirmLogout) {
       try {
